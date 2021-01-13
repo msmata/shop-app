@@ -13,6 +13,12 @@ const PantallaListadoProductos = props => {
                     titulo={itemData.item.titulo}
                     precio={itemData.item.precio}
                     imagen={itemData.item.urlImagen}
+                    verDetalle={() => {
+                        props.navigation.navigate('DetalleProducto', {
+                            idProducto: itemData.item.id,
+                            tituloProducto: itemData.item.titulo
+                        })
+                    }}
                 />
     }
 

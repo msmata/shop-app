@@ -1,22 +1,32 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Image, Button, Platform } from 'react-native';
 import Colores from '../../constantes/Colores';
+import { TouchableNativeFeedback, TouchableOpacity } from 'react-native-gesture-handler';
 
 const ProductoItem = props => {
+
+    let TouchableComponent = TouchableOpacity;
+
+    if (Platform.OS === 'android' && Platform.Version >= 21){
+        TouchableComponent = TouchableNativeFeedback;
+    }
+
     return (
-        <View style={styles.producto}>
-            <View style={styles.contenedorImagen}>
-                <Image style={styles.imagen} source={{uri: props.imagen}} />
+        <TouchableComponent onPress={props.verDetalle}>
+            <View style={styles.producto}>
+                <View style={styles.contenedorImagen}>
+                    <Image style={styles.imagen} source={{uri: props.imagen}} />
+                </View>
+                <View style={styles.detalle}>
+                    <Text style={styles.titulo}>{props.titulo}</Text>
+                    <Text style={styles.precio}>$ {props.precio.toFixed(2)}</Text>
+                </View>
+                <View style={styles.botonera}>
+                    <Button color={Colores.primario} title="Ver detalle" onPress={props.verDetalle} />
+                    <Button color={Colores.primario} title="Añadir al carrito" />
+                </View>
             </View>
-            <View style={styles.detalle}>
-                <Text style={styles.titulo}>{props.titulo}</Text>
-                <Text style={styles.precio}>$ {props.precio.toFixed(2)}</Text>
-            </View>
-            <View style={styles.botonera}>
-                <Button color={Colores.primario} title="Ver detalle" />
-                <Button color={Colores.primario} title="Añadir al carrito" />
-            </View>
-        </View>
+        </TouchableComponent>
     );
 };
 
