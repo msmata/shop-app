@@ -32,8 +32,10 @@ export default (estado = estadoInicial, action) => {
                 ...estado,
                 items: {
                     ...estado.items, [productoAgregado.id]: carrito,
-                    importeTotal: estado.importeTotal + precioProducto
-                }
+                },
+                importeTotal: estado.importeTotal + precioProducto
             };
+            default:
+                return estado;
     }
 };

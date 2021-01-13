@@ -1,9 +1,11 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import * as AccionCarrito from '../store/actions/carrito'
 
 import ProductoItem from '../components/shop/ProductoItem'
+import CustomHeaderButton from '../components/CustomHeaderButton';
 
 const PantallaListadoProductos = props => {
 
@@ -33,6 +35,21 @@ const PantallaListadoProductos = props => {
         </View>
     );
 };
+
+PantallaListadoProductos.navigationOptions = navData => {
+    return {
+        headerTitle: 'Todos los productos',
+        headerRight: () => <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+            <Item
+                title='Carrito'
+                iconName='md-cart'
+                onPress={() => {
+                    navData.navigation.navigate('Carrito')
+                }}
+            />
+        </HeaderButtons>
+    }
+}
 
 const styles = StyleSheet.create({
     listado: {

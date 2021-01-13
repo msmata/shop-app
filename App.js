@@ -4,10 +4,12 @@ import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 
 import productoReducer from './store/reducers/productos';
+import carritoReducer from './store/reducers/carrito';
 import ShopNavigator from './navigation/ShopNavigator';
 
 const rootReducer = combineReducers({
-  productos: productoReducer
+  productos: productoReducer,
+  carrito: carritoReducer
 });
 
 const store = createStore(rootReducer);
