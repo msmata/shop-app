@@ -23,7 +23,7 @@ const ProductoItem = props => {
                 </View>
                 <View style={styles.botonera}>
                     <Button color={Colores.primario} title="Ver detalle" onPress={props.verDetalle} />
-                    <Button color={Colores.primario} title="Añadir al carrito" />
+                    <Button color={Colores.primario} title="Añadir al carrito" onPress={props.agregarCarrito} />
                 </View>
             </View>
         </TouchableComponent>
