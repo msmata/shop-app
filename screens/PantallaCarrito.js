@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button} from 'react-native';
+import { View, Text, StyleSheet, Button, FlatList} from 'react-native';
 import { useSelector } from 'react-redux';
 import Colores from '../constantes/Colores';
+import CarritoItem from '../components/shop/CarritoItem';
 
 const PantallaCarrito = props => {
 
@@ -21,6 +22,17 @@ const PantallaCarrito = props => {
         return itemCarritoTransform;
     });
 
+    const renderItemCarrito = itemData => {
+        return (
+            <CarritoItem
+                cantidad={itemData.item.cantidad}
+                precio={itemData.item.total}
+                titulo={itemData.item.tituloProducto}
+                onBorrar={() => {}}
+            />
+        );
+    }
+
     return (
         <View style={styles.screen}>
             <View style={styles.resumen}>
@@ -34,7 +46,11 @@ const PantallaCarrito = props => {
                 />
             </View>
             <View>
-                <Text>PRODUCTOS</Text>
+                <FlatList
+                    data={itemsCarrito}
+                    renderItem={renderItemCarrito}
+                    keyExtractor={(item, index) => item.idProducto}
+                />
             </View>
         </View>
     );
