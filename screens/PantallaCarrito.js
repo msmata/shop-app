@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, Button, FlatList} from 'react-native';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Colores from '../constantes/Colores';
 import CarritoItem from '../components/shop/CarritoItem';
+import { removeFromCart } from '../store/actions/carrito';
 
 const PantallaCarrito = props => {
 
@@ -19,8 +20,10 @@ const PantallaCarrito = props => {
             });       
         }
 
-        return itemCarritoTransform;
+        return itemCarritoTransform.sort((a, b) => a.idProducto > b.idProducto ? 1: -1);
     });
+
+    const dispatch = useDispatch();
 
     const renderItemCarrito = itemData => {
         return (
@@ -28,7 +31,9 @@ const PantallaCarrito = props => {
                 cantidad={itemData.item.cantidad}
                 precio={itemData.item.total}
                 titulo={itemData.item.tituloProducto}
-                onBorrar={() => {}}
+                onBorrar={() => {
+                    dispatch(removeFromCart(itemData.item.idProducto));
+                }}
             />
         );
     }

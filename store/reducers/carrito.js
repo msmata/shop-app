@@ -1,4 +1,4 @@
-import { ADD_CART } from "../actions/carrito";
+import { ADD_CART, REMOVE_FROM_CART } from "../actions/carrito";
 import ItemCarrito from "../../models/itemCarrito";
 
 const estadoInicial = {
@@ -35,6 +35,34 @@ export default (estado = estadoInicial, action) => {
                 },
                 importeTotal: estado.importeTotal + precioProducto
             };
+            case REMOVE_FROM_CART:
+                const itemSeleccionado = estado.items[action.pid];
+                const cantidadActual = itemSeleccionado.cantidad;
+
+                let itemsActualizados;
+
+                if (cantidadActual > 1) {
+                    const itemActualizado = new ItemCarrito(
+                            cantidadActual - 1,
+                            itemSeleccionado.titulo,
+                            itemSeleccionado.precio,
+                            itemSeleccionado.total - itemSeleccionado.precio
+                        );
+                    itemsActualizados = {...estado.items, [action.pid]: itemActualizado};
+
+                } else {
+                    itemsActualizados = {...estado.items};
+                    delete itemsActualizados[action.pid];
+                }
+
+                const resultado = {
+                    ...estado,
+                    items: itemsActualizados,
+                    importeTotal: estado.importeTotal - itemSeleccionado.precio
+                };
+
+                return resultado;
+
             default:
                 return estado;
     }
